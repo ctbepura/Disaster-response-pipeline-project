@@ -26,6 +26,18 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
 
 def load_data(database_filepath):
+    '''
+    load_data
+    connects to the sqlite data base,  loads the data and splits the X and Y data
+    
+    Input:
+    database_filepath = the sqlite database filepath where data is being loaded from
+    
+    Return:
+    X = the input variables for the ML algorithm
+    Y = the output varibale for the ML algorithm
+    category_names = the message classification categories    
+    '''    
     connect_str = f"sqlite:///{database_filepath}"
     engine = create_engine(connect_str)
     df = pd.read_sql("SELECT * FROM messages", engine)
@@ -39,6 +51,17 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    '''
+    tokenize:
+    Takes a message string and splits it into clean tokens
+    
+    Input:
+    text = the raw message tha twas received
+    
+    Returns:
+    clean_tokens = the tokenized text after normalizing, lemmatizing and cleaning the text    
+    '''
+    
     text = re.sub(r"[^a-zA-Z0-9]", " ", text)
     tokens = word_tokenize(text)
     tokens = [w for w in tokens if w not in stopwords.words("english")]
@@ -53,6 +76,13 @@ def tokenize(text):
 
 
 def build_model():
+    '''
+    build_model
+    defines the pipeline that will be used as the ML model
+    
+    Returns
+    The dfined pipeline
+    '''
     pipeline = Pipeline ([
             ('vect', CountVectorizer(tokenizer=tokenize)),
             ('tfidf', TfidfTransformer()),
@@ -60,14 +90,17 @@ def build_model():
               ])
         
     
-    return pipeline
-
-    
+    return pipeline 
     
     
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    evaluate_model
+    scores and prints the performance of the model in predicting the message classifications    
+    '''
+    
     print()
     
     y_pred = model.predict(X_test)
@@ -78,6 +111,10 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    '''
+    save_model
+    saves the model as a pickle file    
+    '''
     pickle.dump(model, open(model_filepath, "wb"))
 
 
