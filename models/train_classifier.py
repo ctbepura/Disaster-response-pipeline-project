@@ -78,19 +78,30 @@ def tokenize(text):
 def build_model():
     '''
     build_model
-    defines the pipeline that will be used as the ML model
+    defines the pipeline / grid search object that will be used as the ML model and creates a Grid Search object
     
     Returns
-    The dfined pipeline
+    The grid search object
     '''
     pipeline = Pipeline ([
             ('vect', CountVectorizer(tokenizer=tokenize)),
             ('tfidf', TfidfTransformer()),
             ('clf', MultiOutputClassifier(RandomForestClassifier()))
               ])
-        
     
-    return pipeline 
+    #Specify parameters for the grid search
+    parameters = {
+        #"features_text_pipeline_vect_ngram_range": ((1, 1), (1, 2)),
+        #"clf_estimator_min_samples_split": [2, 4],
+        
+        'clf__estimator__n_estimators': [10],
+        'clf__estimator__min_samples_split': [2, 4],
+        }
+    
+    #create grid search object
+    cv = GridSearchCV(pipeline, param_grid=parameters)
+    
+    return cv
     
     
 
