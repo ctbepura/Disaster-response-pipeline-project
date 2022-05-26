@@ -13,3 +13,9 @@
 3. Run your web app: `python run.py`
 
 4. Click the `PREVIEW` button to open the homepage
+
+### General background and Overview:
+This project was done in partial fulfillment of the Data scientist nanodegree program at Udacity. The project analyses real-world data from messages that were sent during natural disasters. Through a process of Data cleaning, ETL and Machine Learning through Natural Language processing, the project builds a model that can be used during future natural disasters to quickly process the messages being received, correctly categorise them and allocate them to the relevant support teams. This project therefore has potential to solve a real world need.
+
+###Acknowledgements
+I would like to thank Appen (formally Figure 8) for providing the data as well as Udacity and my mentors at Udacity for the help throughout the project,
