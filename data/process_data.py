@@ -62,14 +62,15 @@ def clean_data(df):
     # drop the original categories column from `df`
     df = df.drop('categories', axis =1)
     
-    # take only rows where the value of the related column does NOT equal 2
-    df = df[df.related != 2]
     
     # concatenate the original dataframe with the new `categories` dataframe
     df = pd.concat([df, categories], axis = 1)
     
     # drop duplicates
     df = df.drop_duplicates()
+    
+    # take only rows where the value of the related column does NOT equal 2
+    df = df[df.related != 2]
     
     return df
     
